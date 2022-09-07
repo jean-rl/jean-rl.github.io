@@ -1,0 +1,4 @@
+baseURL = 'http://jean-rl.github.io/'
+publishdir = ./docs
+languageCode = 'en-us'
+title = 'Jean Ramirez'
