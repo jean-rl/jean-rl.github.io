@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://jean-rl.github.io/categories/</loc>
+    <loc>https://jean-rl.github.io/perceptron/</loc>
+    <priority>0</priority>
   </url><url>
-    <loc>http://jean-rl.github.io/</loc>
+    <loc>https://jean-rl.github.io/categories/</loc>
   </url><url>
-    <loc>http://jean-rl.github.io/tags/</loc>
+    <loc>https://jean-rl.github.io/</loc>
+  </url><url>
+    <loc>https://jean-rl.github.io/tags/</loc>
   </url>
 </urlset>
