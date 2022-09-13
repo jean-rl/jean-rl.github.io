@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en"><head>
+    <title>The Perceptron</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A brief introduction to neural networks" />
+
+    
+    
+    
+    <link rel="stylesheet" href="../../css/theme.min.css">
+
+    
+    
+    
+
+    
+</head>
+<body>
+        <div id="content" class="mx-auto"><header class="container mt-sm-5 mt-4 mb-4 mt-xs-1">
+    <div class="row">
+        <div class="col-sm-4 col-12 text-sm-right text-center pt-sm-4">
+            <a href="../../" class="text-decoration-none">
+                <img id="home-image" class="rounded-circle"
+                    
+                        
+                            src="../../images/avatar.png"
+                        
+                    
+                />
+            </a>
+        </div>
+        <div class="col-sm-8 col-12 text-sm-left text-center">
+            <h2 class="m-0 mb-2 mt-4">
+                <a href="../../" class="text-decoration-none">
+                    
+                        Your Name
+                    
+                </a>
+            </h2>
+            <p class="text-muted mb-1">
+                
+                    Your Creative Subtitle
+                
+            </p>
+            <ul id="nav-links" class="list-inline mb-2">
+                
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../about/" title="About">About</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../post/" title="Posts">Posts</a>
+                    </li>
+                
+                    <li class="list-inline-item">
+                        <a class="badge badge-white " href="../../categories/" title="Categories">Categories</a>
+                    </li>
+                
+            </ul>
+            <ul id="nav-social" class="list-inline">
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="http://github.com/youruser" target="_blank">
+                            <i class="fab fa-github fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="" target="_blank">
+                            <i class="fab fa-linkedin-in fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="" target="_blank">
+                            <i class="fab fa-twitter fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+                    <li class="list-inline-item mr-3">
+                        <a href="" target="_blank">
+                            <i class="fas fa-at fa-1x text-muted"></i>
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+    <hr />
+</header>
+<div class="container">
+    <div class="pl-sm-2">
+        <div class="mb-3">
+            <h3 class="mb-0">The Perceptron</h3>
+            
+            <small class="text-muted">Published September 13, 2022</small>
+        </div>
+
+        <article>
+            <p>tags:: #on/blog, #unsorted</p>
+<h1 id="perceptron">Perceptron</h1>
+<h2 id="todo">TODO</h2>
+<p>[[Blog Considerations]]</p>
+<ul>
+<li><input disabled="" type="checkbox"> Add plots for linear, non-linear, non-separable with Seaborn.</li>
+<li><input disabled="" type="checkbox"> Work under the example for the linear dataset randomly generated with sklearn</li>
+</ul>
+<p>Hello, friend.
+In this post I&rsquo;ll try to explain to you in little time how the <strong>Perceptron</strong> algorithm works.</p>
+<h3 id="brief-history">Brief history</h3>
+<p>The perceptron, sometimes called the <em>artificial neuron</em>, originated in 1943 when Warren McCulloch and Walter Pitts presented it as a <em>mathematical model</em> of the biological neuron. Although the word &ldquo;perceptron&rdquo; was not mentioned until later in 1958, when Frank Rosenblatt proposed it as a <em>learning algorithm</em> that is nowadays considered the basis of neural networks and deep learning.</p>
+<blockquote>
+<p>The word <em>perceptron</em> comes from the Latin word <em>perceptum</em>, meaning <em>perceive</em>.</p>
+</blockquote>
+<h3 id="the-structure">The structure</h3>
+<p>To better understand the <strong>Perceptron</strong> algorithm, let&rsquo;s look at the structure of an artificial neuron. Analogously to biological neurons, these units have connections that represent stimulus from the outside world, and inside of it, something occurs that fires up the neuron whenever the stimulus satisfies a particular condition.</p>
+<p>![[perceptron_model.png]]</p>
+<p>Particularly, what happens inside of it is that the inputs $x_1,x_2,&hellip;,x_n$ are combined with some weights $w_1,w_2,&hellip;,w_n$ proper of the neuron and if the result surpasses a given threshold, the output $y=1$ , else $y=-1$.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>n_samples, n_features <span style="color:#f92672">=</span> X<span style="color:#f92672">.</span>shape
+</span></span></code></pre></div><p><strong>NOTA</strong></p>
+<blockquote>
+<p>Trabajaremos desde el inicio con un ejemplo para que todo sea mucho más sencillo de expliar en código.
+Aquí me imagino la grafica en Seaborn con el dataset que intentamos separar. En si, las tres graficas. La lineal, la no-lineal y la no-separable en horizontal</p>
+</blockquote>
+<p>This divides the main structure in two main tasks:</p>
+<ol>
+<li>Computing the linear combination between inputs and weights</li>
+<li>Applying to the result of the linear combination a threshold function</li>
+</ol>
+<p>In math terms the <em>linear combination</em> can be represented as</p>
+<p>$$z = x_1w_1+x_2w_2+&hellip;+x_nw_n = \sum_{i=0}^{n} {x_nw_n}$$
+Seeing as a vector the inputs and the weights, the linear combination is just the dot product between both vectors</p>
+<p>$$z = w^T \cdot x$$
+As we will build the perceptron in this blog post, lets write the python function for this step.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">summation</span>(inputs, weights): <span style="color:#75715e"># dot product between w^T.x</span>
+</span></span><span style="display:flex;"><span>	wsum <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dot(inputs, weights)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> wsum  
+</span></span></code></pre></div><p>After obtaining a result, it comes the activation function. The most basic is the <em>unit step function</em>. It is defined as:</p>
+<p>$$g(z) = \begin{cases}
+1 \mbox{ if } z \geq 0 \
+0 \mbox{ otherwise} \
+\end{cases}$$</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">activation</span>(wsum): <span style="color:#75715e"># unit step function</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> wsum <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><h3 id="the-learning-algorithm">The learning algorithm</h3>
+<blockquote>
+<p>&ldquo;The problem is to determine a weight vector that causes the perceptron to produce the correct output for each of the given training samples&rdquo;.</p>
+</blockquote>
+<p>Based on the structure, the <strong>Perceptron</strong> algorithm works as a <em>linear classifier</em>, meaning it can only learn linearly separable patterns. In other words, it will find the <em>hyperplane</em> that separates samples of different classes.</p>
+<p>![[linear-non_linear.PNG]]</p>
+<p>To compute this linear function, the algorithm needs to define an additional parameter, called the <em>bias</em>, which can be thought as the slope intercept of a line.</p>
+<p>$$f(w,b) = w^Tx+b$$
+With this last parameter of the model, the learning process can start with something called the <em>perceptron rule</em>, which will find the best value for the <em>weights</em> that separate the dataset into classes.</p>
+<blockquote>
+<p>The weights are also called &ldquo;parameters&rdquo;, and the bias &ldquo;threshold&rdquo;.</p>
+</blockquote>
+<p>![[perceptron_bias_update.png]]</p>
+<p>$$z = w_0+x_1w_1+&hellip;+x_nw_n = \sum_{i=0}^{n} {x_nw_n}$$</p>
+<p>There are two ways we can code this. One is to add one more value to the input vector as well as to the weights vector. Other is to just add the term <code>bias</code> to the
+This will perform a slight modification to the <code>summation</code> function we created earlier.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>inputs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>append(inputs, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>weights <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>append(weights, np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>random_sample())
+</span></span></code></pre></div><h4 id="perceptron-rule">Perceptron rule</h4>
+<p>The perceptron rule performs in an <em>offline learning</em> manner. This means it will look at each training sample at a time, predict a class for it, and modify the weights whenever misclassification occurs.</p>
+<blockquote>
+<p>&ldquo;The perceptron updates its weights only on those examples on which it makes a mistake&rdquo;</p>
+</blockquote>
+<p>The rule that revises the weight $w_i$ associated with input $x_i$ is</p>
+<p>$$w_i \leftarrow w_i + \Delta w_i$$</p>
+<p>where</p>
+<p>$$\Delta w_i = \eta(t-o)x_i$$</p>
+<p>Here $t$ is the target output for the current training example, $o$ is the output generated by the perceptron, and $\eta$ is a positive constant called the <em>learning rate</em> (which tells how much to adjust the weight after error).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perceptron_rule</span>(inputs, weights, target, output, lr):
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(weights)):
+</span></span><span style="display:flex;"><span>		delta_wi <span style="color:#f92672">=</span> (lr <span style="color:#f92672">*</span> (target <span style="color:#f92672">-</span> output) <span style="color:#f92672">*</span> inputs[i]) 
+</span></span><span style="display:flex;"><span>		weights[i] <span style="color:#f92672">=</span> weights[i] <span style="color:#f92672">+</span> delta_wi 
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> weights
+</span></span></code></pre></div><h3 id="perceptron-class-from-scratch">Perceptron class from scratch</h3>
+<p>To practice what we&rsquo;ve learned by now, we need to code it. Let&rsquo;s create a class to hold all information and methods for the perceptron, and we will follow a <em>sklearn alike style</em> with an <code>__init__()</code>, <code>fit()</code>, and <code>predict()</code> methods.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np <span style="color:#75715e"># to perform matrix operations</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Perceptron</span>:
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">def</span> __init__(self): <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fit</span>(self): <span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(self): <span style="color:#f92672">...</span>
+</span></span></code></pre></div><p>Lets use one of the classic examples, where the perceptron has to learn to behave as the AND logic gate.</p>
+<p>For the init method we will just set the <em>learning rate</em> <code>lr</code> and the <em>epochs</em> <code>epochs</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> __init__(self, lr, epochs):
+</span></span><span style="display:flex;"><span>	self<span style="color:#f92672">.</span>lr <span style="color:#f92672">=</span> lr
+</span></span><span style="display:flex;"><span>	self<span style="color:#f92672">.</span>epochs <span style="color:#f92672">=</span> epochs
+</span></span></code></pre></div><p>In the fit method we will create the</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fit</span>(self, data, labels):
+</span></span><span style="display:flex;"><span>	ones <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>full(len(data), <span style="color:#ae81ff">1</span>) <span style="color:#75715e"># append a one to each of the samples (for the bias)</span>
+</span></span><span style="display:flex;"><span>	data <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>column_stack((data, ones))
+</span></span><span style="display:flex;"><span>	self<span style="color:#f92672">.</span>weights <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(len(data[<span style="color:#ae81ff">0</span>])) <span style="color:#75715e"># init weights as zero for simplicity, add one weight as the bias</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(self<span style="color:#f92672">.</span>epochs):
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> idx, sample <span style="color:#f92672">in</span> enumerate(data):
+</span></span><span style="display:flex;"><span>			wsum <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>summation(sample, self<span style="color:#f92672">.</span>weights)
+</span></span><span style="display:flex;"><span>			output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>activation(wsum)
+</span></span><span style="display:flex;"><span>			self<span style="color:#f92672">.</span>weights <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>optimize(self<span style="color:#f92672">.</span>weights, labels[idx], output, sample)
+</span></span></code></pre></div><p>And in the <code>predict</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">predict</span>(self, data):
+</span></span><span style="display:flex;"><span>	outputs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>empty((len(data), <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>	ones <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>full(len(data), <span style="color:#ae81ff">1</span>) <span style="color:#75715e"># append a one to each of the samples (for the bias)</span>
+</span></span><span style="display:flex;"><span>	data <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>column_stack((data, ones))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> sample <span style="color:#f92672">in</span> data:
+</span></span><span style="display:flex;"><span>		wsum <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>summation(sample, self<span style="color:#f92672">.</span>weights)
+</span></span><span style="display:flex;"><span>		output <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>activation(wsum)
+</span></span><span style="display:flex;"><span>		outputs <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>append(outputs, output)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> outputs
+</span></span></code></pre></div><p>In this case running the code with the toy dataset will result in a line that is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sklearn.datasets <span style="color:#f92672">import</span> load_linnerud
+</span></span></code></pre></div><p>And to plot it:</p>
+<p><em>Include plot here!</em></p>
+<h4 id="using-keras">Using Keras</h4>
+<p>Of course, coding the algorithm from scratch isn&rsquo;t needed anymore, but is a great practice to learn it better. By now, the <em>Keras</em> library has its own implementation, and it is pretty simple to use.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> keras.models <span style="color:#f92672">import</span> Perceptron
+</span></span></code></pre></div><h3 id="conclusion">Conclusion</h3>
+<p>The perceptron algorithm is the starting point to learn how neural networks operate, it touches some important concepts such as <em>weights</em>, <em>learning rate</em>, <em>bias</em> and <em>activation function</em> which are used in more sophisticated network architectures like the <strong>Multi-layer perceptron</strong>, that we will revise in the next post.</p>
+<p>Thank you for reading.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><a href="https://www.cin.ufpe.br/~cavmj/Machine%20-%20Learning%20-%20Tom%20Mitchell.pdf">Machine Learning - Tom M. Mitchell</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Perceptron">Perceptron - Wikipedia</a></li>
+<li><a href="https://see.stanford.edu/materials/aimlcs229/cs229-notes6.pdf">CS229 Lecture notes - Andrew Ng</a> - contains theorem and proof</li>
+<li><a href="https://www.cs.cornell.edu/courses/cs4780/2018fa/lectures/lecturenote03.html">Lecture 3: The Perceptron (cornell.edu)</a></li>
+</ol>
+
+        </article>
+    </div>
+
+    
+
+            </div>
+        </div><footer class="text-center pb-1">
+    <small class="text-muted">
+        
+            &copy; Copyright 2022, Jean Ramirez
+        
+        <br>
+        Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a>
+        and <a href="https://github.com/austingebauer/devise" target="_blank">Devise</a>
+    </small>
+</footer>
+</body>
+</html>
