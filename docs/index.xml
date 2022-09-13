@@ -14,8 +14,7 @@
       <pubDate>Tue, 13 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>https://jean-rl.github.io/post/perceptron/</guid>
-      <description>tags:: #on/blog, #unsorted
-Perceptron TODO [[Blog Considerations]]
+      <description>Perceptron TODO [[Blog Considerations]]
 Add plots for linear, non-linear, non-separable with Seaborn. Work under the example for the linear dataset randomly generated with sklearn Hello, friend. In this post I&amp;rsquo;ll try to explain to you in little time how the Perceptron algorithm works.
 Brief history The perceptron, sometimes called the artificial neuron, originated in 1943 when Warren McCulloch and Walter Pitts presented it as a mathematical model of the biological neuron.</description>
     </item>
