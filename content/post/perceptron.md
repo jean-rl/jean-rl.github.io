@@ -1,5 +1,6 @@
 +++
 author = "Hugo Authors"
+math = "true"
 title = "The Perceptron"
 date = "2022-09-13"
 description = "A brief introduction to neural networks"
