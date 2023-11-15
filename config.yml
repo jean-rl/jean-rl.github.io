@@ -2,6 +2,7 @@ baseURL: "https://jean-rl.github.io/"
 paginate: 5
 theme: "papermod"
 title: Home
+publishDir: "docs"
 
 params:
   description: "Hello, I'm Jean and I write mostly about machine learning."
