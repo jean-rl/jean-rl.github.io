@@ -1,0 +1,40 @@
+baseURL: "https://jean-rl.github.io/"
+paginate: 5
+theme: "papermod"
+title: Home
+
+params:
+  description: "Hello, I'm Jean and I write mostly about machine learning."
+  author: Me
+  profileMode:
+    enabled: true
+    title: "Jeanfed Ramírez"
+    subtitle: "Hello, I'm Jean and I write mostly about machine learning."
+    imageUrl: "images/profile.jpg"
+    imageWidth: 180
+    imageHeight: 180
+    imageTitle: "avatar-profile"
+    buttons:
+      - name: About
+        url: /about
+      - name: Posts
+        url: /posts
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/jean-rl"
+    - name: twitter
+      url: "https://twitter.com/jeanrwx"
+    - name: email
+      url: "mailto://jeanfed.ramirez@gmail.com"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/jeanfed-ramirez/"
+
+menu:
+  main:
+      - name: About
+        url: about/
+        weight: 10
+      - name: Blog
+        url: posts/
+        weight: 30
