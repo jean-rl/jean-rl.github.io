@@ -1,31 +1,33 @@
 baseURL: "https://jean-rl.github.io/"
 paginate: 5
 theme: "papermod"
-title: Home
-publishDir: "docs"
+title: Home # Upper-left title
+publishDir: "docs" # Necessary for Github Pages
 
 params:
-  description: "Hello, I'm Jean and I write mostly about machine learning."
+  description: "Hello, friend"
   author: Me
   profileMode:
-    enabled: true
+    enabled: true # The welcome page is a profile page
     title: "Jeanfed Ramírez"
-    subtitle: "Hello, I'm Jean and I write mostly about machine learning."
-    imageUrl: "images/profile.jpg"
+    subtitle: "Hello there, I'm Jean, and I write mostly about machine learning."
+    imageUrl: "images/profile.jpg" # Path relative to the \static directory
     imageWidth: 180
     imageHeight: 180
-    imageTitle: "avatar-profile"
+    imageTitle: "profile-pic"
     buttons:
       - name: About
         url: /about
-      - name: Posts
+      - name: Posts # I also like to name this "Posts" 
         url: /posts
+      - name: Portfolio
+        url: /portfolio
 
   socialIcons:
     - name: github
       url: "https://github.com/jean-rl"
     - name: twitter
-      url: "https://twitter.com/jeanrwx"
+      url: "https://twitter.com/jeanrl__"
     - name: email
       url: "mailto://jeanfed.ramirez@gmail.com"
     - name: linkedin
