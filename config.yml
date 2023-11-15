@@ -1,12 +1,14 @@
 baseURL: "https://jean-rl.github.io/"
 paginate: 5
 theme: "papermod"
-title: Home # Upper-left title
+title: jeanrl # Upper-left title
 publishDir: "docs" # Necessary for Github Pages
+
+# enableInlineShortcodes: true
 
 params:
   description: "Hello, friend"
-  author: Me
+  # author: Me # Prints the author in every post metadata
   profileMode:
     enabled: true # The welcome page is a profile page
     title: "Jeanfed Ramírez"
@@ -18,10 +20,10 @@ params:
     buttons:
       - name: About
         url: /about
-      - name: Posts # I also like to name this "Posts" 
+      - name: Blog # I also like to name this "Posts" 
         url: /posts
-      - name: Portfolio
-        url: /portfolio
+      # - name: Portfolio
+      #  url: /projects
 
   socialIcons:
     - name: github
@@ -33,6 +35,12 @@ params:
     - name: linkedin
       url: "https://www.linkedin.com/in/jeanfed-ramirez/"
 
+  assets:
+    favicon: "images/favicon.ico" # https://es.wikipedia.org/wiki/Favicon
+    favicon16x16: "images/favicon-16x16.png"
+    favicon32x32: "images/favicon-32x32.png"
+    apple_touch_icon: "images/apple-touch-icon.png"
+
 menu:
   main:
       - name: About
@@ -40,4 +48,7 @@ menu:
         weight: 10
       - name: Blog
         url: posts/
-        weight: 30
+        weight: 20
+      # - name: Portfolio
+      #  url: projects/
+      #  weight: 30
