@@ -20,7 +20,7 @@ params:
     buttons:
       - name: About
         url: /about
-      - name: Blog # I also like to name this "Posts" 
+      - name: Posts # I also like to name this "Posts", the alternative is "Blog"
         url: /posts
       # - name: Portfolio
       #  url: /projects
@@ -46,7 +46,7 @@ menu:
       - name: About
         url: about/
         weight: 10
-      - name: Blog
+      - name: Posts
         url: posts/
         weight: 20
       # - name: Portfolio
